@@ -1,0 +1,18 @@
+body {
+    background: black !important;
+  }
+  
+  .container{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      background-color: white !important;
+      font-size: 20px;
+      font-family: verdana;
+      letter-spacing: 7px;
+      padding: 20px 20px !important;
+      width:400px !important;
+      border: 2px solid red;
+  }
+  
