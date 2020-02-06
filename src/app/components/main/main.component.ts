@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RatesService } from 'src/app/services/rates.service';
-import { interval, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { interval, Observable, BehaviorSubject, timer } from 'rxjs';
+import { switchMap, flatMap } from 'rxjs/operators';
 
 
 @Component({
@@ -15,37 +15,36 @@ export class MainComponent implements OnInit {
   try: any;
   eur: any;
   data: any;
+  items: any;
+  item: number;
+  convertedValues: any;
+  values: any;
 
   constructor(private ratesService: RatesService) { }
-  int: Observable<number> = interval(6000)
+  int: Observable<number> = timer(0, 2000)
+
   ngOnInit() {
 
-     this.data = this.int
-      .pipe(
-        switchMap(() => {
-         return this.ratesService.getRates()
-        }))
-        .subscribe(res => {
-        this.eur =  res.response[1].price
-        this.usd =  res.response[0].price
-       // this.usd = (1 / res.rates.USD).toFixed(3)
-        console.log(this.eur);
+    this.data = this.int
+      .pipe(switchMap(this.ratesService.getRates))
+      .subscribe((res: any) => {
+        this.items = res.response
+        console.log(this.items
+          [0].price);
       })
 
   }
+  
+  convert(value) {
+    if (value != "") {
+      this.data.unsubscribe()
+      this.convertedValues = this.items.map((item) => item.price * value);
+    }
 
-convert(value){
-console.log( typeof value);
-if(value != ""){
-this.usd = this.usd*value
-this.eur = this.eur*value
-this.data.unsubscribe()
-}
+  }
+  
 
-
-
-
-}
-
-
+  trackByFn(index) {
+    return index;
+  }
 }

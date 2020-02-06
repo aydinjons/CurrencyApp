@@ -5,27 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+ 
   <title>Ajax Kullanımı</title>
 </head>
 
 <body>
   <div class="container">
-    <h3>Turkish Rates</h3>
+    <h3>Currency Converter</h3>
     <hr>
     <label for="amount">TL</label>
     <input placeholder="Type a value" type="number" id="amount" min="0" #balance>
     <hr>
     <button id="change" class="btn btn-danger" (click)="convert(balance.value)">Convert</button>
     <hr>
-    <div class="container2">
-      <h2>Dolar <span class="badge badge-secondary">{{usd}}</span></h2>
+    <div *ngFor="let item of items; trackBy: trackByFn">
+      <h2>{{item.symbol}}<span class="badge badge-secondary">{{item.price}}</span></h2>
+      <hr>
+
     </div>
-    <div class="container2">
-      <h2>Euro <span class="badge badge-secondary">{{eur}}</span></h2>
-    </div>
+    <ng-container class="container2" *ngFor="let value of convertedValues">
+      <h2><span class="badge badge-secondary"> {{value}}</span></h2>
+    </ng-container>
+
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
